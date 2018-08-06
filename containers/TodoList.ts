@@ -1,5 +1,5 @@
 import { connect, Dispatch } from 'react-redux';
-import { toggleTodo, TodoAction } from '../actions';
+import { toggleTodo, TodoAction, deleteTodo } from '../actions';
 import TodoList from '../components/TodoList';
 import { Todos } from '../states/TodoState';
 
@@ -9,6 +9,7 @@ interface StateFromProps {
 
 interface DispatchFromProps {
   onTodoClick: (id: number) => void;
+  onDeleteTodo: (id: number) => void;
 }
 
 function mapStateToProps(state: Todos): StateFromProps {
@@ -21,6 +22,9 @@ function mapDispatchToProps(dispatch: Dispatch<TodoAction>): DispatchFromProps {
   return {
     onTodoClick: (id: number) => {
       dispatch(toggleTodo(id));
+    },
+    onDeleteTodo: (id: number) => {
+      dispatch(deleteTodo(id));
     },
   };
 }
