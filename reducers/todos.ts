@@ -8,7 +8,7 @@ const initialState: Todos = [{
   createdAt: Date.now()
 }];
 
-function todos(state: Todos = initialState, action: TodoAction): Todos {
+function todos(state: Todos = [], action: TodoAction): Todos {
   switch(action.type) {
    case TodoActionType.ADD_TODO:
     return [

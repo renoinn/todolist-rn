@@ -6,18 +6,33 @@ import todos from './reducers/todos';
 import { Todos } from './states/TodoState';
 import { Provider, Store } from 'react-redux';
 import { createStore, combineReducers } from 'redux';
+import { persistStore, persistReducer, Persistor } from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
+import { PersistGate } from 'redux-persist/integration/react'
 
-//const reducers = combineReducers({todos});
-const store: Store<Todos> = createStore(todos, []);
+export type AppState = {
+  todos: Todos
+};
+
+const reducers = combineReducers<AppState>({todos});
+const persistConfig = {
+  key: 'root',
+  storage,
+}
+const persistedReducer = persistReducer(persistConfig, reducers)
+const store: Store<Todos> = createStore(persistedReducer);
+const persistor: Persistor = persistStore(store);
 
 export default class App extends React.Component<{}> {
   render() {
     return (
       <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
       <View style={styles.container}>
         <AddTodoButton/>
         <TodoList/>
       </View>
+      </PersistGate>
       </Provider>
     );
   }

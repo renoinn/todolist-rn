@@ -2,6 +2,7 @@ import { connect, Dispatch } from 'react-redux';
 import { toggleTodo, TodoAction, deleteTodo } from '../actions';
 import TodoList from '../components/TodoList';
 import { Todos } from '../states/TodoState';
+import { AppState } from '../App';
 
 interface StateFromProps {
   todos: Todos;
@@ -12,9 +13,9 @@ interface DispatchFromProps {
   onDeleteTodo: (id: number) => void;
 }
 
-function mapStateToProps(state: Todos): StateFromProps {
+function mapStateToProps(appState: AppState): StateFromProps {
   return {
-    todos: state,
+    todos: appState.todos,
   };
 }
 
