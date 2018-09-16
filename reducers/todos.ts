@@ -5,7 +5,8 @@ const initialState: Todos = [{
   id: 0,
   completed: false,
   text: 'initial todo',
-  createdAt: Date.now()
+  createdAt: Date.now(),
+  remindAt: Date.now() + (60 * 60 * 12 * 1000)
 }];
 
 function todos(state: Todos = [], action: TodoAction): Todos {
@@ -17,7 +18,8 @@ function todos(state: Todos = [], action: TodoAction): Todos {
         id: action.id,
         text: action.text,
         completed: false,
-        createdAt: Date.now()
+        createdAt: Date.now(),
+        remindAt: Date.now() + (60 * 60 * 12 * 1000)
       },
     ];
   case TodoActionType.TOGGLE_TODO:
