@@ -3,6 +3,7 @@ export interface Todo {
     completed: boolean;
     text: string;
     createdAt: number;
+    remindAt: number;
 }
 
 export type Todos = Todo[];
@@ -14,7 +15,8 @@ function generateTodo(text: string, id: number): Todo {
         id: id,
         completed: false,
         text: text,
-        createdAt: Date.now()
+        createdAt: Date.now(),
+        remindAt: Date.now() + (60 * 60 * 12 * 1000)
     };
 }
 
