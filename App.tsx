@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, KeyboardAvoidingView, ScrollView } from 'react-native';
 import TodoList from './containers/TodoList';
 import AddTodoButton from './containers/AddTodoButton';
 import todos from './reducers/todos';
@@ -27,12 +27,18 @@ export default class App extends React.Component<{}> {
   render() {
     return (
       <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-      <View style={styles.container}>
-        <AddTodoButton/>
-        <TodoList/>
-      </View>
-      </PersistGate>
+        <PersistGate loading={null} persistor={persistor}>
+        
+          
+          <KeyboardAvoidingView style = {{ flex: 1 }} behavior="padding">
+          <View style={styles.container}>
+            <TodoList/>
+            <AddTodoButton/>
+          </View>
+          </KeyboardAvoidingView>
+          
+          
+        </PersistGate>
       </Provider>
     );
   }
@@ -45,5 +51,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'flex-start',
     justifyContent: 'center',
-  },
+  }
 });

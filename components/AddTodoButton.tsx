@@ -48,7 +48,14 @@ class AddButton extends React.Component<AddTodoButtonProps, {input: string}> {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row'
+    flex: 1,
+    flexDirection: 'row',
+    height: 60,
+    width: "100%",
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    backgroundColor: 'blue'
   },
   input: {
     flex: 4,
