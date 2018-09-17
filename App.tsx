@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { StyleSheet, View, KeyboardAvoidingView, ScrollView } from 'react-native';
-import TodoList from './containers/TodoList';
-import AddTodoButton from './containers/AddTodoButton';
+import * as Expo from "expo";
+import RootComponent from './components/RootComponent';
 import todos from './reducers/todos';
 import { Todos } from './states/TodoState';
 import { Provider, Store } from 'react-redux';
@@ -14,6 +13,10 @@ export type AppState = {
   todos: Todos
 };
 
+export type Loading = {
+  isReady: boolean
+};
+
 const reducers = combineReducers<AppState>({todos});
 const persistConfig = {
   key: 'root',
@@ -23,33 +26,38 @@ const persistedReducer = persistReducer(persistConfig, reducers)
 const store: Store<Todos> = createStore(persistedReducer);
 const persistor: Persistor = persistStore(store);
 
-export default class App extends React.Component<{}> {
+export default class App extends React.Component<{}, Loading> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      isReady: false
+    };
+  }
+  
+  componentDidMount() {
+    this.loadFonts();
+  }
+
+  async loadFonts() {
+    await Expo.Font.loadAsync({
+      Roboto: require("native-base/Fonts/Roboto.ttf"),
+      Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
+      Ionicons: require("@expo/vector-icons/fonts/Ionicons.ttf")
+    });
+    this.setState({ isReady: true });
+  }
+
   render() {
+    if (!this.state.isReady) {
+      return <Expo.AppLoading />;
+    }
+
     return (
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-        
-          
-          <KeyboardAvoidingView style = {{ flex: 1 }} behavior="padding">
-          <View style={styles.container}>
-            <TodoList/>
-            <AddTodoButton/>
-          </View>
-          </KeyboardAvoidingView>
-          
-          
+          <RootComponent />
         </PersistGate>
       </Provider>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: 20,
-    backgroundColor: '#fff',
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-  }
-});

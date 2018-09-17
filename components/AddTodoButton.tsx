@@ -1,5 +1,13 @@
 import * as React from 'react';
-import {StyleSheet, View, Button, TextInput} from 'react-native';
+import {StyleSheet} from 'react-native';
+import {
+  Col,
+  Grid,
+  Item as FormItem,
+  Input,
+  Icon,
+  Button
+} from 'native-base';
 
 export interface AddTodoButtonProps {
   onSubmit: (s: string) => void;
@@ -31,17 +39,27 @@ class AddButton extends React.Component<AddTodoButtonProps, {input: string}> {
 
   render() {
     return (
-      <View style={styles.container}>
-          <TextInput
-            style={styles.input}
-            onChangeText={this.onInputChange}
-            value={this.state.input}
-          />
-          <Button
-            onPress={this.onFormSubmit}
-            title="Add Todo"
-          />
-      </View>
+      <Grid style={styles.container}>
+          <Col style={styles.input} size={4}>
+            <FormItem style={{backgroundColor: '#fff'}} rounded>
+              <Input
+                style={{
+                  height: 40,
+                  fontSize: 13
+                }}
+                onChangeText={this.onInputChange}
+                value={this.state.input}
+                placeholder='やりたいことは？'/>
+            </FormItem>
+          </Col>
+          <Col style={{justifyContent: 'center'}} size={1}>
+            <Button
+              style={styles.button}
+              onPress={this.onFormSubmit}>
+              <Icon type='Entypo' name='check' />
+            </Button>
+          </Col>
+      </Grid>
     );
   }
 }
@@ -49,23 +67,25 @@ class AddButton extends React.Component<AddTodoButtonProps, {input: string}> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'row',
-    height: 60,
+    height: 56,
     width: "100%",
     position: "absolute",
     bottom: 0,
     left: 0,
-    backgroundColor: 'blue'
+    backgroundColor: '#efefef',
+    justifyContent: 'center'
   },
   input: {
-    flex: 4,
-    backgroundColor: '#fff',
+    paddingLeft: 5,
+    paddingRight: 5,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   button: {
-    flex: 1,
-    alignItems: 'center'
+    height: 56,
+    alignSelf: 'stretch',
+    alignItems: 'center',
+    justifyContent: 'center',
   }
 });
 
